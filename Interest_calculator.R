@@ -1,34 +1,26 @@
-<<<<<<< HEAD
-monthly <- 650
-e <- exp(1)
-r <- log(1.05)
-years <- 34
-months <- years*12
+if(!require('scales')) {
+      install.packages('scales')
+      library('scales')
+}
 
-#For loop to create a vector of the future values of each month's investment
-=======
-monthly <- 630
+#Create a numeric vector containing the purchasing power of each monthly investment in today's economy.
+monthly <- 670
 e <- exp(1)
-r <- .05
+expected_APR <- .07 #Expected returns expressed as an annual percentage rate
+expected_inflation <- .02 #Expected inflation rate
+r <- log(1+expected_APR)-log(1+expected_inflation) #r is the rate of return we will use in our continuous growth model so we can express our future purchasing power in terms we can intuitively understand, i.e. how much money it would be in today's economy. 
 years <- 34
 months <- years*12
->>>>>>> a263521c5589825b05ad1f86a684b35c11c4253c
 vals <- numeric()
 for (i in 1:months) {
       vals[i] <- monthly*e^(r*i/12)
 }
-vals
-<<<<<<< HEAD
 
 contributions <- monthly*years*12
-print(tail(vals))
-print(sum(vals))
-print(contributions)
-=======
-contributions <- monthly*years*12
-print(vals)
-print(sum(vals))
-print(contributions)
-vals[84]
-log(2)/7
->>>>>>> a263521c5589825b05ad1f86a684b35c11c4253c
+print(noquote(c("Total planned contributions :",dollar(contributions))))
+print(noquote(c("Marina's wealth when she is 48:",
+              dollar(sum(vals)))))
+print(noquote(c("This month's investment:",
+                dollar(monthly))))
+print(noquote(c("Future power of this month's investment:",
+                dollar(round(tail(vals,1),2)))))
