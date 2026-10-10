@@ -5,7 +5,6 @@ P <- read.table("aprMay.csv", header = T, sep = ",") #P stands for presence. The
 dates <- P[,1]
 P <- P[,2:9]
 row.names(P) <- dates
-P
 
 #Now, enter all of the variable data.
 U_bill <- 133.86 #Enter the amount of the Longmont utility bill for water and electricity.
@@ -56,9 +55,15 @@ P_last_month <- P[Rent_first:Rent_last,]
 days_away <- colSums(P_last_month == 0) - na_days 
 Rent_adjustment <- -1*days_away/2*base_Rent/days_Rent - base_Rent/days_Rent*na_days
 
-#Combine the data into one table and summarize
-Tots <- rbind(Utot,Gtot,Itot,base_Rent,Rent_adjustment)
-row.names(Tots) <- c("Util","Gas","Inet","Rent","Adj")
+#Combine the data and summarize.
+
+Tots <- rbind(Utot,Itot,Gtot,base_Rent,Rent_adjustment)
+row.names(Tots) <- c("Util","Inet","Gas","Rent","Adj")
 sum_Tots <- Tots |> colSums() |> round(2)
-Tots
-sum_Tots
+sum_Tots2 <- Tots |> rowSums() |> round(2)
+print("",quote = F)
+print(sum_Tots)
+print("",quote = F)
+print(Tots)
+print(sum_Tots)
+print(sum_Tots2)

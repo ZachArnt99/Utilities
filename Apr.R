@@ -1,6 +1,4 @@
 library(dplyr)
-balances <- data.frame(Rob = 595.94, Jesse = 499, Luis1 = 0, Luis2 = 0,
-                       Luis3 = 0, Zach = 0, Mike = 1095)
 
 #Housemates only pay for utilities on dates when they sleep at the house. The first step is to create a "presence" dataframe.
 
@@ -27,7 +25,7 @@ Rent_last <- which(row.names(P) == "Apr 30")
 #Enter the number of days to ignore in the previous month. These are the number of days from Rent_first to Rent_last when the housemate was not living at the house because they had either not moved in yet, or had already moved out.
 na_days <- data.frame(Rob = 0, Jesse = 0, Luis1 = 19, Luis2 = 19, Luis3 = 19, Zach = 0, Mike = 26, Basil = 30) 
 #Enter the monthly base rent for each housemate.
-base_Rent <- data.frame(Rob = 595, Jesse = 712.5, Luis1 = 0, Luis2 = 0, Luis3 = 0, Zach = 0, Mike = 895, Basil = 750)
+base_Rent <- data.frame(Rob = 595, Jesse = 685.73, Luis1 = 0, Luis2 = 0, Luis3 = 0, Zach = 0, Mike = 895, Basil = 750)
 
 #No more user input is required beyond this point.
 
@@ -59,9 +57,9 @@ P_last_month <- P[Rent_first:Rent_last,]
 days_away <- colSums(P_last_month == 0) - na_days 
 Rent_adjustment <- -1*days_away/2*base_Rent/days_Rent - base_Rent/days_Rent*na_days
 
-#Combine the data into one table and summarize
-Tots <- rbind(Utot,Gtot,Itot,base_Rent,Rent_adjustment) |> round(2)
-row.names(Tots) <- c("Util","Gas","Inet","Rent","Adj")
+#Combine the data and summarize.
+Tots <- rbind(Utot,Itot,Gtot,base_Rent,Rent_adjustment) |> round(2)
+row.names(Tots) <- c("Util","Inet","Gas","Rent","Adj")
 sum_Tots <- Tots |> colSums() |> round(2)
 Tots[5,2] <- 685.73/30*-2/2
 Tots
